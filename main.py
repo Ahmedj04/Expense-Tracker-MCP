@@ -31,7 +31,7 @@ async def add_expense(
     amount: float,
     category: Optional[str] = None,
     notes: Optional[str] = None,
-    expense_date: Optional[str] = None,
+    expense_date: Optional[date] = None,
 ):
     """
     Add a new expense for a user.
