@@ -20,9 +20,6 @@ async def app_lifespan(app):
 
 mcp = FastMCP("Expense Tracker MCP", lifespan=app_lifespan)
 
-# =========================================================
-# ADD EXPENSE
-# =========================================================
 
 @mcp.tool
 async def add_expense(
@@ -34,7 +31,7 @@ async def add_expense(
     expense_date: Optional[date] = None,
 ):
     """
-    Add a new expense for a user.
+    Add a new expense for a user with optional category, notes, and expense date (YYYY-MM-DD).
     """
 
     query = """
@@ -65,11 +62,6 @@ async def add_expense(
         "expense": dict(row)
     }
 
-
-# =========================================================
-# LIST EXPENSES
-# =========================================================
-
 @mcp.tool
 async def list_expenses(
     user_id: str,
@@ -77,7 +69,7 @@ async def list_expenses(
     category: Optional[str] = None,
 ):
     """
-    List expenses for a user.
+    Retrieve a user's expenses with optional category filtering and result limit.
     """
 
     if category:
@@ -108,11 +100,6 @@ async def list_expenses(
         "expenses": [dict(row) for row in rows]
     }
 
-
-# =========================================================
-# EDIT EXPENSE
-# =========================================================
-
 @mcp.tool
 async def edit_expense(
     expense_id: str,
@@ -124,7 +111,7 @@ async def edit_expense(
     expense_date: Optional[date] = None,
 ):
     """
-    Edit an expense.
+    Update an existing expense by expense ID. Only provided fields will be changed.
     """
 
     existing = await fetchrow(
@@ -172,18 +159,13 @@ async def edit_expense(
         "expense": dict(updated)
     }
 
-
-# =========================================================
-# DELETE EXPENSE
-# =========================================================
-
 @mcp.tool
 async def delete_expense(
     expense_id: str,
     user_id: str,
 ):
     """
-    Delete an expense.
+    Delete a user's expense using the expense ID.
     """
 
     result = await execute(
@@ -201,11 +183,6 @@ async def delete_expense(
         "result": result
     }
 
-
-# =========================================================
-# SUMMARIZE EXPENSES
-# =========================================================
-
 @mcp.tool
 async def summarize_expenses(
     user_id: str,
@@ -213,7 +190,7 @@ async def summarize_expenses(
     end_date: Optional[date] = None,
 ):
     """
-    Summarize expenses for a user.
+    Generate an expense summary with total spending and category breakdown for an optional date range.
     """
 
     query = """
