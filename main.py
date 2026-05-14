@@ -121,7 +121,7 @@ async def edit_expense(
     amount: Optional[float] = None,
     category: Optional[str] = None,
     notes: Optional[str] = None,
-    expense_date: Optional[str] = None,
+    expense_date: Optional[date] = None,
 ):
     """
     Edit an expense.
@@ -209,8 +209,8 @@ async def delete_expense(
 @mcp.tool
 async def summarize_expenses(
     user_id: str,
-    start_date: Optional[str] = None,
-    end_date: Optional[str] = None,
+    start_date: Optional[date] = None,
+    end_date: Optional[date] = None,
 ):
     """
     Summarize expenses for a user.
